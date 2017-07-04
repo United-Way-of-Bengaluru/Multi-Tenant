@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 import MySQLdb
 
 # Create your models here.
@@ -10,10 +11,11 @@ class Tenants(models.Model):
 	encryption_key = models.CharField(max_length=200)
 
 	def save(self, *args, **kwargs):
-		print ("Line 12, Save Tenants", self.name)
+
+		database_settings = getattr(settings, "DATABASES", None);
 		
 		# Open database connection
-		db = MySQLdb.connect("localhost","root","admin", "multi_tenant")
+		db = MySQLdb.connect(database_settings['default']['HOST'], database_settings['default']['USER'], database_settings['default']['PASSWORD'], database_settings['default']['NAME'])
 
 		# prepare a cursor object using cursor() method
 		cursor = db.cursor()
@@ -30,7 +32,7 @@ class Tenants(models.Model):
 
 		print "Database Created successfully"
 
-		db1 = MySQLdb.connect("localhost","root","admin", dbname)
+		db1 = MySQLdb.connect(database_settings['default']['HOST'], database_settings['default']['USER'], database_settings['default']['PASSWORD'], dbname)
 		cursor1 = db1.cursor()
 
 		self.exec_sql_file(cursor1, 'multi_tenant.sql')

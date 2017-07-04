@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'multi_tenant_app.urls'
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'multi_tenant_app.wsgi.application'
 
 DATABASES = {
     'default': {
-	'ENGINE': 'db_multitenant.db.backends.mysql',
+	    'ENGINE': 'db_multitenant.db.backends.mysql',
         'NAME': 'multi_tenant',
         'USER': 'root',
         'PASSWORD': 'admin',
